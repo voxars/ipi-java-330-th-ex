@@ -69,16 +69,6 @@
                     <a th:href="|/employes/${model.manager.id}|"><span th:text="${model.manager.prenom}"/> <span th:text="${model.manager.nom}"/>
                         <span th:text="${model.manager.matricule}" class="badge badge-primary"></span></a>
                 </li>
-                <li class="list-group-item" th:if="!${model.manager}">
-                    <form th:action="|/techniciens/${model.id}/manager/add|" method="get">
-                        <div class="input-group">
-                            <input type="text" name="matricule" value="" placeholder="Ajouter un manager avec le matricule..." class="form-control">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
             </ul>
             </div>
         </div>
@@ -92,21 +82,43 @@
                             <a th:href="|/employes/${tech.id}|"><span th:text="${tech.prenom}"/> <span th:text="${tech.nom}"/> <span class="badge badge-primary" th:text="${tech.matricule}"></span></a>
                             <a th:href="|/managers/${model.id}/techniciens/${tech.id}/delete|" class="btn btn-sm btn-danger float-right"><i class="fa fa-remove"></i></a>
                         </li>
-                        <li class="list-group-item">
-                            <form th:action="|/managers/${model.id}/techniciens/add|" method="get" class="row">
-                                <div class="input-group">
-                                    <input type="text" name="matricule" value="" placeholder="Ajouter un technicien avec le matricule..." class="form-control">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </form>
+    <div class="row" th:if="${model instanceof T(com.ipiecoles.java.java320.model.Manager) && model.id != null  }">
+        <div class="col-lg-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <form th:action="|/managers/${model.id}/techniciens/add|" id="addTechnicien" method="get" class="row">
+                        <div class="input-group">
+                            <input type="text" name="matriculeToAdd" value="" placeholder="Ajouter un technicien avec le matricule..." class="form-control">
+                            <div class="input-group-append">
+                                <button type="submit" form="addTechnicien" class="btn btn-success btn-sm"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" th:if="${model instanceof T(com.ipiecoles.java.java320.model.Technicien) && model.id != null  }">
+        <div class="col-lg-6">
+            <ul class="list-group">
+                <li class="list-group-item" th:if="!${model.manager}">
+                    <form th:action="|/techniciens/${model.id}/manager/add|" id="addManager" method="get">
+                        <div class="input-group">
+                            <input type="text" name="matriculeToAdd" value="" placeholder="Ajouter un manager avec le matricule..." class="form-control">
+                            <div class="input-group-append">
+                                <button type="submit" form="addManager" class="btn btn-success btn-sm"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="row mt-2">
         <div class="col-lg-6">
             <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer"></input>

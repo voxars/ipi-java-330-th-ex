@@ -8,6 +8,9 @@
     <div th:fragment="error" class="jumbotron">
         <h1 class="display-4">Erreur <span th:text="${status}"/> </h1>
         <p class="lead" th:text="${error}"/>
+        <ul th:each="er : ${errors}">
+            <li th:text="${er}"></li>
+        </ul>
     </div>
 </body>
 </html>

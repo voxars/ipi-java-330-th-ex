@@ -19,7 +19,21 @@ public class TechnicienService {
     @Autowired
     private TechnicienRepository technicienRepository;
 
-    public Manager addManager(Long idTechnicien, String matricule) {
+    public Technicien deleteManager(Long idTechnicien) {
+        Optional<Technicien> t = technicienRepository.findById(idTechnicien);
+        if(t.isEmpty()){
+            throw new EntityNotFoundException("Impossible de trouver le technicien d'identifiant " + idTechnicien);
+        }
+
+        Technicien technicien = t.get();
+
+        technicien.setManager(null);
+        technicienRepository.save(technicien);
+
+        return technicien;
+    }
+
+    public Technicien addManager(Long idTechnicien, String matricule) {
         Optional<Technicien> t = technicienRepository.findById(idTechnicien);
         if(t.isEmpty()){
             throw new EntityNotFoundException("Impossible de trouver le technicien d'identifiant " + idTechnicien);
@@ -42,6 +56,6 @@ public class TechnicienService {
         technicien.setManager(m);
         technicienRepository.save(technicien);
 
-        return m;
+        return technicien;
     }
 }
