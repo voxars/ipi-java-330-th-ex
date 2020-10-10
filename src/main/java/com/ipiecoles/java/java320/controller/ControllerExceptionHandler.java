@@ -27,4 +27,15 @@ public class ControllerExceptionHandler {
         return modelAndView;
     }
 
+    @ExceptionHandler(IllegalAccessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView handleIllegalAccessException(IllegalAccessException e){
+        ModelAndView modelAndView = new ModelAndView("main");
+        modelAndView.addObject("error", e.getMessage());
+        modelAndView.addObject("status", HttpStatus.BAD_REQUEST.value());
+        modelAndView.addObject("page", "error");
+        modelAndView.addObject("fragment", "error");
+        return modelAndView;
+    }
+
 }

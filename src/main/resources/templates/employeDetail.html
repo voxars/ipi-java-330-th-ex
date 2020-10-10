@@ -8,7 +8,7 @@
 <div th:fragment="employeDetail" class="container">
     <h2>Détail du [[${model.className}]] [[${model.matricule}]]</h2>
     <!--/*@thymesVar id="model" type="com.ipiecoles.java.java320.model.Employe"*/-->
-    <form id="saveForm" th:action="|/employes/${model.id}|" method="post" th:object="${model}" class="row">
+    <form id="saveForm" th:action="(${model.id}) ? ('/employes/' + ${model.className.toLowerCase()} + '/' + ${model.id}) : '/employes'" method="post" th:object="${model}" class="row">
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-control-label" for="nom">Nom</label>
@@ -61,7 +61,7 @@
         <div th:if="${model instanceof T(com.ipiecoles.java.java320.model.Technicien)  }" class="col-lg-6">
             <label class="form-control-label" for="grade">Grade</label>
             <input type="number" th:value="*{grade}" class="form-control" name="grade" id="grade">
-
+            <div th:if="${model.id}">
             <label class="form-control-label" th:if="${model.id}">Manager</label>
             <ul class="list-group">
                 <li class="list-group-item" th:if="${model.manager}">
@@ -80,6 +80,7 @@
                     </form>
                 </li>
             </ul>
+            </div>
         </div>
 
         <div th:if="${model instanceof T(com.ipiecoles.java.java320.model.Manager) && model.id != null  }" class="col-lg-6">
@@ -106,13 +107,11 @@
             </div>
         </div>
     </form>
-</div>
-<div class="row">
-    <div class="col-lg-6">
-        <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer"></input>
-        <!--            <c:if test="${!empty model.id}">-->
-        <!--                <a href="/employes/${model.id}/delete" class="btn btn-danger">Supprimer</a>-->
-        <!--            </c:if>-->
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer"></input>
+            <a th:if="${model.id}" th:href="|/employes/${model.id}/delete|" class="btn btn-danger">Supprimer</a>
+        </div>
     </div>
 </div>
 </body>
