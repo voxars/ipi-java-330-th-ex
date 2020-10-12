@@ -7,7 +7,6 @@ import com.ipiecoles.java.java320.model.Technicien;
 import com.ipiecoles.java.java320.service.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

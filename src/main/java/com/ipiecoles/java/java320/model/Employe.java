@@ -1,8 +1,5 @@
 package com.ipiecoles.java.java320.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,6 +1,5 @@
 package com.ipiecoles.java.java320.controller;
 
-import com.ipiecoles.java.java320.model.Manager;
 import com.ipiecoles.java.java320.service.EmployeService;
 import com.ipiecoles.java.java320.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Map;
 
 @RequestMapping("/managers")
 @Controller

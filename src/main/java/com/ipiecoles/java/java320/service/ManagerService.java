@@ -18,10 +18,6 @@ public class ManagerService {
     @Autowired
     private TechnicienRepository technicienRepository;
 
-    public Manager findOneWithEquipeById(Long id){
-        return managerRepository.findOneWithEquipeById(id);
-    }
-
     public Manager deleteTechniciens(Long idManager, Long idTechnicien) {
         Optional<Manager> m = managerRepository.findById(idManager);
         if(m.isEmpty()){
