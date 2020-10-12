@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ManagerRepository extends BaseEmployeRepository<Manager> {
-    @EntityGraph(attributePaths = "equipe")
-    Manager findOneWithEquipeById(Long id);
 }

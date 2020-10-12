@@ -18,7 +18,14 @@ public class ManagerService {
     @Autowired
     private TechnicienRepository technicienRepository;
 
-    public Manager deleteTechniciens(Long idManager, Long idTechnicien) {
+    /**
+     * Méthode permettant de supprimer un technicien de l'équipe d'un manager
+     * @param idManager Identifiant du manager
+     * @param idTechnicien Identifiant du technicien à supprimer de l'équipe
+     * @@throws EntityNotFoundException si le manager ou le technicien n'est pas trouvé
+     * @throws IllegalArgumentException si le technicien n'est pas dans l'équipe du manager
+     */
+    public void deleteTechniciens(Long idManager, Long idTechnicien) {
         Optional<Manager> m = managerRepository.findById(idManager);
         if(m.isEmpty()){
             throw new EntityNotFoundException("Impossible de trouver le manager d'identifiant " + idManager);
@@ -31,16 +38,25 @@ public class ManagerService {
         Manager manager = m.get();
         Technicien technicien = t.get();
 
+        if(technicien.getManager().getId().equals(manager.getId())){
+            throw new IllegalArgumentException("Le manager d'identifiant " + idManager + " n'a pas le technicien d'identifiant " + idTechnicien + " dans son équipe");
+        }
+
         manager.getEquipe().remove(technicien);
         managerRepository.save(manager);
 
         technicien.setManager(null);
         technicienRepository.save(technicien);
-
-        return manager;
     }
 
-    public Manager addTechniciens(Long idManager, String matricule) {
+    /**
+     * Méthode permettant d'ajouter un technicien dans l'équipe d'un manager
+     * @param idManager Identifiant du manager
+     * @param matricule Matricule du technicien
+     * @throws EntityNotFoundException si le manager ou le technicien n'est pas trouvé
+     * @throws IllegalArgumentException si le technicien a déjà un manager
+     */
+    public void addTechniciens(Long idManager, String matricule) {
         Optional<Manager> m = managerRepository.findById(idManager);
         if(m.isEmpty()){
             throw new EntityNotFoundException("Impossible de trouver le manager d'identifiant " + idManager);
@@ -62,6 +78,5 @@ public class ManagerService {
 
         t.setManager(manager);
         technicienRepository.save(t);
-        return manager;
     }
 }

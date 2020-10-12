@@ -19,20 +19,35 @@ public class TechnicienService {
     @Autowired
     private TechnicienRepository technicienRepository;
 
-    public Technicien deleteManager(Long idTechnicien) {
+    /**
+     * Méthode permettant de supprimer le manager d'un technicien (le technicien est juste supprimé de l'équipe du manager)
+     *
+     * @param idTechnicien Identifiant du technicien dont il faut supprimer le manager
+     * @throws EntityNotFoundException si le technicien n'est pas trouvé
+     * @throws IllegalArgumentException si le technicien n'a pas de manager
+     */
+    public void deleteManager(Long idTechnicien) {
         Optional<Technicien> t = technicienRepository.findById(idTechnicien);
         if(t.isEmpty()){
             throw new EntityNotFoundException("Impossible de trouver le technicien d'identifiant " + idTechnicien);
         }
 
         Technicien technicien = t.get();
-
+        if(technicien.getManager() == null){
+            throw new IllegalArgumentException("Le technicien n'a déjà pas de manager !");
+        }
         technicien.setManager(null);
         technicienRepository.save(technicien);
-
-        return technicien;
     }
 
+    /**
+     * Méthode permettant d'ajouter un manager à un technicien
+     * @param idTechnicien Identifiant du technicien
+     * @param matricule Matricule du manager
+     * @return Le technicien lié à son manager
+     * @throws EntityNotFoundException si le technicien ou le manager n'est pas trouvé
+     * @throws IllegalArgumentException si le technicien a déjà un manager
+     */
     public Technicien addManager(Long idTechnicien, String matricule) {
         Optional<Technicien> t = technicienRepository.findById(idTechnicien);
         if(t.isEmpty()){
