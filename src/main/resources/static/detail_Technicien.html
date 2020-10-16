@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Gestion des employés</title>
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/font-awesome.css">
+</head>
+<body>
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="http://localhost:8080/">Gestion des Employés</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li><a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortProperty=matricule&amp;sortDirection=ASC" class="nav-link">Liste des employés <span class="badge badge-primary">2499</span></a></li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/employes" method="GET">
+                <div class="form-group">
+                    <input name="matricule" class="form-control" placeholder="Rechercher un matricule" type="text">
+                </div>
+                <button type="submit" class="btn btn-outline-success ml-2 my-2 my-sm-0">Rechercher</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <h2>Détail du Technicien T00006</h2>
+    
+    <form id="saveForm" action="http://localhost:8080/employes/technicien/10" method="post" class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-control-label" for="nom">Nom</label>
+                <input type="text" value="Rodriguez" class="form-control" name="nom" id="nom">
+
+                <label class="form-control-label" for="prenom">Prénom</label>
+                <input type="text" value="Mélissa" class="form-control" name="prenom" id="prenom">
+
+                <label class="form-control-label" for="matricule">Matricule</label>
+                <input type="text" value="T00006" class="form-control" name="matricule" id="matricule">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-control-label" for="nom">Salaire</label>
+                <div class="input-group">
+                    <input type="number" value="2417.0" class="form-control" name="salaire" id="salaire">
+                    <div class="input-group-append">
+                        <span class="input-group-text">€</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-control-label" for="nom">Prime Annuelle</label>
+                    <div class="input-group">
+                        <input type="text" value="3225.0" class="form-control" name="primeAnnuelle" id="primeAnnuelle">
+                        <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="form-control-label" for="nom">Date d'embauche</label>
+                <input type="text" value="25/10/2013" class="form-control" name="dateEmbauche" id="dateEmbauche">
+            </div>
+        </div>
+        
+
+        <div class="col-lg-6">
+            <label class="form-control-label" for="grade">Grade</label>
+            <input type="number" value="5" class="form-control" name="grade" id="grade">
+            <div>
+            <label class="form-control-label">Manager</label>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="http://localhost:8080/techniciens/10/manager/delete" class="btn btn-sm btn-danger float-right"><i class="fa fa-remove"></i></a>
+                    <a href="http://localhost:8080/employes/5"><span>Benjamin</span> <span>David</span>
+                        <span class="badge badge-primary">M0001,</span></a>
+                </li>
+            </ul>
+            </div>
+        </div>
+
+        
+    </form>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <ul class="list-group">
+                
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
+            <a href="http://localhost:8080/employes/10/delete" class="btn btn-danger">Supprimer</a>
+        </div>
+    </div>
+</div>
+
+
+</body></html>
