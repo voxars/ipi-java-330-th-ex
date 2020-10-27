@@ -83,27 +83,31 @@ public class EmployeController {
     }
 
     @PostMapping(value = "/technicien/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveTechnicien(Technicien technicien, @PathVariable Long id, final ModelMap model){
-       return saveEmploye(technicien, id, model);
+    public RedirectView saveTechnicien(Technicien technicien, @PathVariable Long id, final ModelMap model, RedirectAttributes attributes){
+       return saveEmploye(technicien, id, attributes);
     }
 
     @PostMapping(value = "/commercial/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveCommercial(Commercial commercial, @PathVariable Long id, final ModelMap model){
-        return saveEmploye(commercial, id, model);
+    public RedirectView saveCommercial(Commercial commercial, @PathVariable Long id, final ModelMap model, RedirectAttributes attributes){
+        return saveEmploye(commercial, id, attributes);
     }
 
     @PostMapping(value = "/manager/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveManager(Manager manager, @PathVariable Long id, final ModelMap model){
-        return saveEmploye(manager, id, model);
+    public RedirectView saveManager(Manager manager, @PathVariable Long id, final ModelMap model, RedirectAttributes attributes){
+        return saveEmploye(manager, id, attributes);
     }
 
-    private String saveEmploye(Employe employe, Long id, final ModelMap model){
-        employe = employeService.updateEmploye(id, employe);
-        model.addAttribute("model", employe);
-        model.addAttribute("page", "employeDetail");
-        model.addAttribute("success", "Enregistrement de l'employé effectué !");
-        model.addAttribute("fragment", "employeDetail");
-        return "main";
+    private RedirectView saveEmploye(Employe employe, Long id, RedirectAttributes attributes){
+        try{
+            employe = employeService.updateEmploye(id, employe);
+            attributes.addFlashAttribute("type", "success");
+            attributes.addFlashAttribute("message", "Enregistrement de l'employé effectué !");
+        }
+        catch (Exception e){
+            attributes.addFlashAttribute("type", "danger");
+            attributes.addFlashAttribute("message", e.getMessage());
+        }
+        return new RedirectView("/employes/"+id);
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)

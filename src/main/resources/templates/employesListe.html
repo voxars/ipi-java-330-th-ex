@@ -84,10 +84,10 @@
                 <div class="col-lg-6">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item disabled" th:if="${param.page} == 0">
+                            <li class="page-item disabled" th:if="${#strings.equals(param.page,'0')}">
                                 <a href="#" class="page-link">&laquo;</a>
                             </li>
-                            <li class="page-item" th:if="${param.page} != 0">
+                            <li class="page-item" th:if="${not #strings.equals(param.page,'0')}">
                                 <a class="page-link" th:href="@{/employes(page=${previousPage}, size=${param.size}, sortDirection=${param.sortDirection}, sortProperty=${param.sortProperty})}"
                                 >
                                     &laquo;
