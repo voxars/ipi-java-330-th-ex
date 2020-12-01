@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="container">
+    <h2>Détail du [[${employe.className}]] [[${employe.matricule}]]</h2>
+
+    <!--/*@thymesVar id="employe" type="com.ipiecoles.java.java320.model.Employe"*/-->
+    <form id="saveForm" th:action="'/employes/' + ${employe.className.toLowerCase()}" method="post" class="row">
+        <input type="hidden" th:value="${employe.id}" name="id">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-control-label" for="nom">Nom</label>
+                <input type="text" value="Poirier" th:value="${employe.nom}" class="form-control" name="nom" id="nom">
+
+                <label class="form-control-label" for="prenom">Prénom</label>
+                <input type="text" value="Marie" th:value="${employe.prenom}" class="form-control" name="prenom" id="prenom">
+
+                <label class="form-control-label" for="matricule">Matricule</label>
+                <input type="text" value="C00002" th:value="${employe.matricule}" class="form-control" name="matricule" id="matricule">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-control-label" for="nom">Salaire</label>
+                <div class="input-group">
+                    <input type="number" value="2404.0" th:value="${employe.salaire}" class="form-control" name="salaire" id="salaire">
+                    <div class="input-group-append">
+                        <span class="input-group-text">€</span>
+                    </div>
+                </div>
+
+                <div th:if="${employe.id}">
+                    <label class="form-control-label" for="nom">Prime Annuelle</label>
+                    <div class="input-group">
+                        <span th:text="${#numbers.formatCurrency(employe.primeAnnuelle)}"></span>
+<!--                        <input type="text" value="500.0" th:value="${employe.primeAnnuelle}" class="form-control" name="primeAnnuelle" id="primeAnnuelle">-->
+<!--                        <div class="input-group-append">-->
+<!--                            <span class="input-group-text">€</span>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+
+                <label class="form-control-label" for="nom">Date d'embauche</label>
+                <input type="text" value="10/01/2011" th:value="${#temporals.format(employe.dateEmbauche, 'dd/MM/yyyy')}" class="form-control" name="dateEmbauche" id="dateEmbauche">
+            </div>
+        </div>
+
+<!--        <div th:if="${#strings.equals(employe.className, 'Commercial')}"></div>-->
+        <div th:if="${employe instanceof T(com.ipiecoles.java.java320.model.Commercial)}" class="col-lg-6">
+            <label class="form-control-label" for="performance">Performance</label>
+            <input type="number" th:value="${employe.performance}" class="form-control" name="performance" id="performance">
+
+            <label class="form-control-label" for="caAnnuel">CA Annuel</label>
+            <div class="input-group">
+                <input type="number" value="2404.0" th:value="${employe.caAnnuel}" class="form-control" name="caAnnuel" id="caAnnuel">
+                <div class="input-group-append">
+                    <span class="input-group-text">€</span>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${employe instanceof T(com.ipiecoles.java.java320.model.Technicien)}" class="col-lg-6">
+            <label class="form-control-label" for="grade">Grade</label>
+            <input type="number" th:value="${employe.grade}" class="form-control" name="grade" id="grade">
+
+            <label class="form-control-label" th:if="${employe.id}">Manager</label>
+            <ul class="list-group">
+                <li class="list-group-item" th:if="${employe.manager}">
+                    <a th:href="'/employes/' + ${employe.manager.id}">
+                        <span th:text="${employe.manager.prenom}"></span> <span th:text="${employe.manager.nom}"></span>
+                        <span class="badge badge-primary float-right" th:text="${employe.manager.matricule}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div th:if="${employe.id != null and employe instanceof T(com.ipiecoles.java.java320.model.Manager)}" class="col-lg-6">
+            <label class="form-control-label">Equipe</label>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="tech : ${employe.equipe}">
+                    <a th:href="'/employes/' + ${tech.id}">
+                        <span th:text="${tech.prenom}"></span> <span th:text="${tech.nom}"></span>
+                        <span class="badge badge-primary float-right" th:text="${tech.matricule}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </form>
+    
+    
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
+            <a th:href="'/employes/'+${employe.id}+'/delete'" class="btn btn-danger">Supprimer</a>
+        </div>
+    </div>
+</div>
+
+
+</body></html>

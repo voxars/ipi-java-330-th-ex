@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="container">
+    <h2>Liste des employés</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="btn-group">
+                <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=matricule#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Nouvel employé
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/technicien">Technicien</a></li>
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/commercial">Commercial</a></li>
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/manager">Manager</a></li>
+                </ul>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        <div>
+                            
+                                <span>
+                                Matricule <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=DESC&amp;sortProperty=matricule"><i class="fa fa-chevron-up"></i></a>
+                            </span>
+                        </div>
+                        
+                    </th>
+                    <th scope="col">
+                        
+                        <div>
+                            <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=nom">Nom</a>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        
+                        <div>
+                            <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=prenom">Prénom</a>
+                        </div>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <tr th:each="employe : ${employes}">
+                        <th scope="row" th:text="${employe.matricule}">C00002</th>
+                        <td th:text="${employe.nom}">Poirier</td>
+                        <td th:text="${employe.prenom}">Marie</td>
+                        <td><a th:href="'/employes/' + ${employe.id}">Détail</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>
+                        Affichage des employés <span th:text="${start}">1</span> à <span th:text="${end}">10</span> sur un total de <span th:text="${employes.totalElements}">250</span>
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+<!--                            <li class="page-item disabled" th:if="${pageNumber} == 1">-->
+<!--                                <a href="#" class="page-link">«</a>-->
+<!--                            </li>-->
+                            <li class="page-item" th:if="${employes.hasPrevious()}">
+                                <a th:href="@{/employes(page=${previousPage},size=${param.size},sortDirection=${param.sortDirection},sortProperty=${param.sortProperty})}" class="page-link">«</a>
+                            </li>
+                            //localhost:8080/say?msg[]=Hey&msg[]=You
+
+                            <li class="page-item">
+                                <a class="page-link">Page <span th:text="${pageNumber}">1</span></a>
+                            </li>
+                            <li class="page-item" th:if="${employes.hasNext()}">
+                                <a class="page-link" th:href="@{/employes(page=${nextPage},size=${param.size},sortDirection=${param.sortDirection},sortProperty=${param.sortProperty})}">
+                                    »
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body></html>
